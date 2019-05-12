@@ -1,0 +1,94 @@
+type User {
+  id: ID! @id @unique
+  username: String!
+  email: String!
+  lastName: String
+  firstName: String
+  introduce: String
+  job: String
+  address: String
+  authentication: [Authentication!]!
+  review: [Review!]!
+  guesthouses: [GuestHouse!]!
+  trips: [Trip!]!
+  likes: [Like!]!
+  comments: [Comment!]!
+  rooms: [Room!]!
+}
+
+type GuestHouse {
+  id: ID! @id @unique
+  location: String
+  title: String!
+  caption: String!
+  price: Int!
+  user: User!
+  files: [File!]!
+  likes: [Like!]!
+  comments: [Comment!]!
+}
+
+type Trip {
+  id: ID! @id @unique
+  location: String
+  title: String!
+  price: Int!
+  caption: String!
+  user: User!
+  files: [File!]!
+  likes: [Like!]!
+  comments: [Comment!]!
+}
+
+type Like {
+  id: ID! @id @unique
+  user: User!
+  guestHouse: GuestHouse!
+  trip: Trip!
+  comment: Comment!
+}
+
+type Comment {
+  id: ID! @id @unique
+  text: String!
+  user: User!
+  guestHouse: GuestHouse!
+  trip: Trip!
+  likes: [Like!]!
+}
+
+type File {
+  id: ID! @id @unique
+  url: String!
+  guestHouse: GuestHouse!
+  trip: Trip!
+}
+
+type Authentication {
+  id: ID! @id @unique
+  passport: String!
+  profileImage: String!
+  phoneNumber: Int!
+}
+
+type Review {
+  id: ID! @id @unique
+  date: DateTime
+  content: String!
+  trip: Trip!
+  guestHouse: GuestHouse!
+}
+
+type Room {
+  id: ID! @id @unique
+  participants: [User!]!
+  message: [Message!]!
+}
+
+type Message {
+  id: ID! @id @unique
+  text: String!
+  from: User! @relation(name: "From")
+  to: User! @relation(name: "To")
+  room: Room!
+}
